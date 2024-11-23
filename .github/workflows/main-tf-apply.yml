@@ -4,9 +4,9 @@ name: PullPlan
 
 # Controls when the workflow will run
 on:
-  pull_request:
-    branches: [ "main" ]
-    
+  push:
+    branches:
+      - 'main'
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -47,8 +47,8 @@ jobs:
         id: validate
         run: terraform validate -no-color
       
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -no-color
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve -compact-warnings -no-color
         continue-on-error: true
         
