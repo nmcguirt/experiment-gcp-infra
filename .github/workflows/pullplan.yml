@@ -43,8 +43,8 @@ jobs:
         id: init
         run: |
           terraform init \
-          -backend_config="bucket=${{env.STATE_BUCKET}}" \
-          -backend_config="prefix=terraform/${{env.PROJECT_ID}}/state"
+          -backend_config="bucket=${{vars.STATE_BUCKET}}" \
+          -backend_config="prefix=terraform/${{env.GCP_PROJECT}}/state"
       
       - name: Terraform Validate
         id: validate
@@ -54,7 +54,7 @@ jobs:
         id: plan
         run: |
           terraform plan -no-color \
-          -backend_config="bucket=${{env.STATE_BUCKET}}" \
-          -backend_config="prefix=terraform/${{env.PROJECT_ID}}/state"
+          -backend_config="bucket=${{vars.STATE_BUCKET}}" \
+          -backend_config="prefix=terraform/${{env.GCP_PROJECT}}/state"
         continue-on-error: true
         
