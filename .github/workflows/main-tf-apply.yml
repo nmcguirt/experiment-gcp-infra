@@ -36,15 +36,18 @@ jobs:
       
       - name: Terraform fmt
         id: fmt
-        run: terraform fmt -check
+        run: |
+          terraform fmt -check \
+          -backend-config="bucket=${{vars.STATE_BUCKET}}" \
+          -backend-config="prefix=terraform/${{env.GCP_PROJECT}}/state"
         continue-on-error: true
       
       - name: Terraform Init
         id: init
         run: |
           terraform init \
-          -backend_config="bucket=${{vars.STATE_BUCKET}}" \
-          -backend_config="prefix=terraform/${{env.GCP_PROJECT}}/state"
+          -backend-config="bucket=${{vars.STATE_BUCKET}}" \
+          -backend-config="prefix=terraform/${{env.GCP_PROJECT}}/state"
       
       - name: Terraform Validate
         id: validate
@@ -54,7 +57,7 @@ jobs:
         id: apply
         run: |
           terraform apply -auto-approve -compact-warnings -no-color \
-          -backend_config="bucket=${{vars.STATE_BUCKET}}" \
-          -backend_config="prefix=terraform/${{env.GCP_PROJECT}}/state"
+          -backend-config="bucket=${{vars.STATE_BUCKET}}" \
+          -backend-config="prefix=terraform/${{env.GCP_PROJECT}}/state"
         continue-on-error: true
         
