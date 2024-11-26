@@ -53,9 +53,6 @@ jobs:
       
       - name: Terraform Plan
         id: plan
-        run: |
-          terraform plan -no-color \
-          -backend-config="bucket=${{vars.STATE_BUCKET}}" \
-          -backend-config="prefix=terraform/${{env.GCP_PROJECT}}/state"
+        run: terraform plan -no-color
         continue-on-error: true
         
