@@ -3,7 +3,7 @@ provider "google" {
   project = "github-exploration-442503"
 }
 
-teraform {
+terraform {
   backend "gcs" {}
 }
 
