@@ -37,11 +37,15 @@ jobs:
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
+
         continue-on-error: true
       
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: |
+          terraform init \
+          -backend-config="bucket=${{vars.STATE_BUCKET}}" \
+          -backend-config="prefix=terraform/${{env.GCP_PROJECT}}/state"
       
       - name: Terraform Validate
         id: validate

@@ -41,7 +41,10 @@ jobs:
       
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: |
+          terraform init \
+          -backend-config="bucket=${{vars.STATE_BUCKET}}" \
+          -backend-config="prefix=terraform/${{env.GCP_PROJECT}}/state"
       
       - name: Terraform Validate
         id: validate
@@ -49,6 +52,6 @@ jobs:
       
       - name: Terraform Apply
         id: apply
-        run: terraform apply -auto-approve -compact-warnings -no-color
+        run: terraform apply
         continue-on-error: true
         
